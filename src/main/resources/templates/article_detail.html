@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시물 상세</title>
+</head>
+<body>
+<h1>게시물 상세</h1>
+<div>
+    <label>제목</label>
+    <h2 th:text="${article.subject}">제목</h2>
+
+    <label>내용</label>
+    <p th:text="${article.content}">내용</p>
+</div>
+<div><h3>댓글</h3>
+    <div th:each="comment : ${article.comments}"><p th:text="${comment.content}"></p>
+        <p>작성 시간: <span th:text="${comment.createDate}"></span></p></div>
+</div>
+<div style="margin: 10px">
+    <form th:action="@{/article/{id}(id=${article.id})}" method="post">
+        댓글 <input type="text" name="content">
+        <button type="submit">작성</button>
+    </form>
+</div>
+
+<div style="margin: 10px">
+    <form action="/list" method="get">
+        <button type="submit">글목록</button>
+    </form>
+</div>
+
+<div style="margin: 10px">
+    <form th:action="@{/delete/{id}(id=${article.id})}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">삭제</button>
+    </form>
+</div>
+<div style="margin: 10px">
+    <form th:action="@{/edit/{id}(id=${article.id})}" method="get">
+        <button type="submit">수정</button>
+    </form>
+</div>
+</body>
+</html>
